@@ -9,6 +9,11 @@ const util = require('util');
 const app = express();
 const PORT = process.env.PORT ||8000; 
 
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
+
+//Asychronous process
+
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsyn = util.promisify(fs.writeFile);
 
@@ -16,7 +21,24 @@ const writeFileAsyn = util.promisify(fs.writeFile);
 
 app.use(express.static("./develop/public"));
 
+//API
+app.get("/api/notes", function(req, res) {
+    readFileAsync("./develop/db/db.json" , "utf8").then(function(data) {
+        res.json(notes);
+    })
+})
 
+app.post("/api/notes" , function(req, res) {
+    const note = req.body;
+    readFileAsync("./develop/db/db.json" , "utf8").then(function(data) {
+        note.id = notes.length + 1
+        note.push(note);
+        return notes
+    }).then(function(note) {
+        writeFileAsyn("./develop/db/db.json" , JSON.stringify(notes))
+        res.json(note);
+    })
+})
 //Requiring data
 const { notes } = require('./')
 
