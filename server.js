@@ -1,12 +1,24 @@
 //Dependencies
-
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const util = require('util');
 
-//Instantiate the server
 
+//Instantiate the server with express
 const app = express();
+const PORT = process.env.PORT ||8000; 
+
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsyn = util.promisify(fs.writeFile);
+
+//Middleware
+
+app.use(express.static("./develop/public"));
 
 
+//Requiring data
+const { notes } = require('./')
 
 
 
