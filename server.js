@@ -7,7 +7,7 @@ const util = require('util');
 
 //Instantiate the server with express
 const app = express();
-const PORT = process.env.PORT ||8000; 
+const PORT = process.env.PORT || 8000; 
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
