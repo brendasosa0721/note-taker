@@ -60,12 +60,20 @@ app.delete("/api/notes/:id" , function(req,res) {
         res.send('saved completed');
     })
 })
-//Requiring data
-const { notes } = require('./');
-const { json } = require('body-parser');
 
 
+//HTML Routes
 
+app.get("/notes" , function(req, res) {
+    res.sendFile(path.join(__dirname, "./develop/public/index.html")); // Creating the path to connect the index.hmtl
+});
+
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "./develop/public/index.html"));
+})
+app.get("*" , function(req, res) {
+    res.sendFile(path.join(__dirname, "./develop/public/index.html")); // Adding the middleware which will be act as a bridge
+});
 
 
 
@@ -75,6 +83,6 @@ const { json } = require('body-parser');
 
 //Listen method
 
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
+app.listen(PORT,  function() {
+    console.log("APP listening on PORT " + PORT);
 });
